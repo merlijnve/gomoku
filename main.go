@@ -24,27 +24,28 @@ func initWindow() {
 	w := webview.New(debug)
 	defer w.Destroy()
 	w.SetTitle("Gomoku")
-	w.SetSize(600, 600, webview.HintNone)
+	w.SetSize(800, 1250, webview.HintNone)
 	w.Bind("getBoard", func() [][]int {
 		return board
 	})
 	w.Bind("makeMove", makeMove)
+	w.Bind("checkWin", checkWin)
 	print(getCurrentDirectory())
 	w.Navigate("file://" + getCurrentDirectory() + "/web/index.html")
 	w.Run()
 }
 
-func makeMove(col int, row int) [][]int {
+func makeMove(col int, row int, player int) [][]int {
 	if board[row][col] == 0 {
-		board[row][col] = 1
-		board[row][col+1] = 2
+		board[row][col] = player
 		return [][]int{{col, row}, {col + 1, row}}
 	}
 	return nil
 }
 
-// minmax algorithm
-func minmax(board [][]int, depth int, isMax bool) int {
+// minimax algorithm
+// maybe add alpha-beta pruning?
+func minimax(board [][]int, depth int, isMax bool) int {
 	if depth == 0 {
 		return 0
 	}
@@ -54,7 +55,7 @@ func minmax(board [][]int, depth int, isMax bool) int {
 			for j := 0; j < len(board[i]); j++ {
 				if board[i][j] == 0 {
 					board[i][j] = 2
-					best = max(best, minmax(board, depth-1, !isMax))
+					best = max(best, minimax(board, depth-1, !isMax))
 					board[i][j] = 0
 				}
 			}
@@ -66,7 +67,7 @@ func minmax(board [][]int, depth int, isMax bool) int {
 			for j := 0; j < len(board[i]); j++ {
 				if board[i][j] == 0 {
 					board[i][j] = 1
-					best = min(best, minmax(board, depth-1, !isMax))
+					best = min(best, minimax(board, depth-1, !isMax))
 					board[i][j] = 0
 				}
 			}
@@ -89,13 +90,13 @@ func min(a int, b int) int {
 	return b
 }
 
-////////////////////////
+func getBoardsize() int {
+	return 19
+}
 
 func main() {
-	boardSize := 15
-	for i := 0; i < boardSize; i++ {
-		board = append(board, make([]int, boardSize))
+	for i := 0; i < getBoardsize(); i++ {
+		board = append(board, make([]int, getBoardsize()))
 	}
-
 	initWindow()
 }

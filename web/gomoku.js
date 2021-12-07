@@ -16,15 +16,23 @@ getBoard().then((board) => {
   }
 });
 
+let clicker = 0
+
 function clickTile(col, row) {
-  makeMove(col, row).then((index) => {
+  makeMove(col, row, (clicker % 2) + 1).then((index) => {
     if (index) {
+      clicker++
       document
         .getElementById(index[0][0] + "-" + index[0][1])
-        .classList.add("black");
-      document
-        .getElementById(index[1][0] + "-" + index[1][1])
-        .classList.add("white");
+        .classList.add(clicker % 2 == 1 ? "black" : "white");
+      checkWin().then((result) => {
+        if (result != 0) {
+          var x = document.createElement("h1");
+          var t = document.createTextNode(result == 1 ? "black wins" : "white wins");
+          x.appendChild(t);
+          document.body.appendChild(x);
+        }
+      })
     }
   });
 }
