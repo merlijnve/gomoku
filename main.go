@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -10,6 +9,7 @@ import (
 )
 
 var board [19][19]int
+var freeThrees [][][]int
 
 func getCurrentDirectory() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
@@ -21,6 +21,8 @@ func getCurrentDirectory() string {
 
 //create an ui with webview
 func initWindow() {
+	freeThrees = make([][][]int, 0)
+
 	debug := true
 	w := webview.New(debug)
 	defer w.Destroy()
@@ -37,9 +39,9 @@ func initWindow() {
 }
 
 func makeMove(col int, row int, player int) [][]int {
-	fmt.Println(checkFreeThrees())
 	if board[row][col] == 0 {
 		board[row][col] = player
+		freeThrees = checkFreeThrees(freeThrees)
 		return [][]int{{col, row}, {col + 1, row}}
 	}
 	return nil

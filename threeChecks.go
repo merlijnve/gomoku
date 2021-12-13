@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
-func horizontalThree(x int, y int) int {
+// returns the coordinates of free threes found
+func horizontalThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
 	if x+6 < boardSize {
@@ -13,7 +17,7 @@ func horizontalThree(x int, y int) int {
 			board[x+3][y] == board[x+1][y] &&
 			board[x+4][y] == 0 {
 			fmt.Println("found -***- horizontal")
-			return board[x+1][y]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x + 4, y}, {1}})
 		}
 		// -*-**-
 		if board[x][y] == 0 &&
@@ -23,8 +27,7 @@ func horizontalThree(x int, y int) int {
 			board[x+4][y] == board[x+1][y] &&
 			board[x+5][y] == 0 {
 			fmt.Println("found -*-**- horizontal")
-
-			return board[x+1][y]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x + 5, y}, {1}})
 		}
 		// -**-*-
 		if board[x][y] == 0 &&
@@ -34,13 +37,13 @@ func horizontalThree(x int, y int) int {
 			board[x+4][y] == board[x+1][y] &&
 			board[x+5][y] == 0 {
 			fmt.Println("found -**-*- horizontal")
-			return board[x+1][y]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x + 5, y}, {1}})
 		}
 	}
-	return 0
+	return freeThrees
 }
 
-func verticalThree(x int, y int) int {
+func verticalThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
 	if y+6 < boardSize {
@@ -51,7 +54,7 @@ func verticalThree(x int, y int) int {
 			board[x][y+3] == board[x][y+1] &&
 			board[x][y+4] == 0 {
 			fmt.Println("found -***- vertical")
-			return board[x][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x, y + 4}, {2}})
 		}
 		// -*-**-
 		if board[x][y] == 0 &&
@@ -61,7 +64,7 @@ func verticalThree(x int, y int) int {
 			board[x][y+4] == board[x][y+1] &&
 			board[x][y+5] == 0 {
 			fmt.Println("found -*-**- vertical")
-			return board[x][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x, y + 5}, {2}})
 		}
 		// -**-*-
 		if board[x][y] == 0 &&
@@ -71,13 +74,13 @@ func verticalThree(x int, y int) int {
 			board[x][y+4] == board[x][y+1] &&
 			board[x][y+5] == 0 {
 			fmt.Println("found -**-*- vertical")
-			return board[x][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x, y + 5}, {2}})
 		}
 	}
-	return 0
+	return freeThrees
 }
 
-func diagonalRightThree(x int, y int) int {
+func diagonalRightThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
 	if y+6 < boardSize && x+6 < boardSize {
@@ -88,7 +91,7 @@ func diagonalRightThree(x int, y int) int {
 			board[x+3][y+3] == board[x+1][y+1] &&
 			board[x+4][y+4] == 0 {
 			fmt.Println("found -***- diagonal")
-			return board[x+1][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x + 4, y + 4}, {3}})
 		}
 		// -*-**-
 		if board[x][y] == 0 &&
@@ -98,7 +101,7 @@ func diagonalRightThree(x int, y int) int {
 			board[x+4][y+4] == board[x+1][y+1] &&
 			board[x+5][y+5] == 0 {
 			fmt.Println("found -*-**- diagonal")
-			return board[x+1][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x + 5, y + 5}, {3}})
 		}
 		// -**-*-
 		if board[x][y] == 0 &&
@@ -108,13 +111,13 @@ func diagonalRightThree(x int, y int) int {
 			board[x+4][y+4] == board[x+1][y+1] &&
 			board[x+5][y+5] == 0 {
 			fmt.Println("found -**-*- diagonal")
-			return board[x+1][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x + 5, y + 5}, {3}})
 		}
 	}
-	return 0
+	return freeThrees
 }
 
-func diagonalLeftThree(x int, y int) int {
+func diagonalLeftThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
 	if y+6 < boardSize && x-6 > 0 {
@@ -125,7 +128,7 @@ func diagonalLeftThree(x int, y int) int {
 			board[x-3][y+3] == board[x-1][y+1] &&
 			board[x-4][y+4] == 0 {
 			fmt.Println("found -***- diagonal")
-			return board[x-1][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x - 4, y + 4}, {3}})
 		}
 		// -*-**-
 		if board[x][y] == 0 &&
@@ -135,7 +138,7 @@ func diagonalLeftThree(x int, y int) int {
 			board[x-4][y+4] == board[x-1][y+1] &&
 			board[x-5][y+5] == 0 {
 			fmt.Println("found -*-**- diagonal")
-			return board[x-1][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x - 5, y + 5}, {3}})
 		}
 		// -**-*-
 		if board[x][y] == 0 &&
@@ -145,30 +148,38 @@ func diagonalLeftThree(x int, y int) int {
 			board[x-4][y+4] == board[x-1][y+1] &&
 			board[x-5][y+5] == 0 {
 			fmt.Println("found -**-*- diagonal")
-			return board[x-1][y+1]
+			freeThrees = append(freeThrees, [][]int{{x, y}, {x - 5, y + 5}, {3}})
 		}
 	}
-	return 0
+	return freeThrees
 }
 
-func checkFreeThrees() int {
+func checkFreeThrees(existingFreeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
+	freeThrees := make([][][]int, 0)
+	newFreeThrees := make([][][]int, 0)
 	for y := 0; y < boardSize; y++ {
 		for x := 0; x < boardSize; x++ {
-			if horizontalThree(x, y) != 0 {
-				return horizontalThree(x, y)
-			}
-			if verticalThree(x, y) != 0 {
-				return verticalThree(x, y)
-			}
-			if diagonalRightThree(x, y) != 0 {
-				return diagonalRightThree(x, y)
-			}
-			if diagonalLeftThree(x, y) != 0 {
-				return diagonalLeftThree(x, y)
-			}
+			freeThrees = horizontalThree(x, y, freeThrees)
+			freeThrees = verticalThree(x, y, freeThrees)
+			freeThrees = diagonalLeftThree(x, y, freeThrees)
+			freeThrees = diagonalRightThree(x, y, freeThrees)
 		}
 	}
-	return 0
+	for j := 0; j < len(freeThrees); j++ {
+		exists := false
+		for i := 0; i < len(existingFreeThrees); i++ {
+			if reflect.DeepEqual(existingFreeThrees[i], freeThrees[j]) {
+				exists = true
+			}
+		}
+		if exists == false {
+			newFreeThrees = append(newFreeThrees, freeThrees[j])
+		}
+	}
+	if len(newFreeThrees) > 1 {
+		fmt.Println("ILLEGAL MOVE")
+	}
+	return freeThrees
 }
