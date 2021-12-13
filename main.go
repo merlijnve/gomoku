@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -8,7 +9,7 @@ import (
 	"github.com/webview/webview"
 )
 
-var board [][]int
+var board [19][19]int
 
 func getCurrentDirectory() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
@@ -25,7 +26,7 @@ func initWindow() {
 	defer w.Destroy()
 	w.SetTitle("Gomoku")
 	w.SetSize(800, 1250, webview.HintNone)
-	w.Bind("getBoard", func() [][]int {
+	w.Bind("getBoard", func() [19][19]int {
 		return board
 	})
 	w.Bind("makeMove", makeMove)
@@ -36,6 +37,7 @@ func initWindow() {
 }
 
 func makeMove(col int, row int, player int) [][]int {
+	fmt.Println(checkFreeThrees())
 	if board[row][col] == 0 {
 		board[row][col] = player
 		return [][]int{{col, row}, {col + 1, row}}
@@ -95,8 +97,5 @@ func getBoardsize() int {
 }
 
 func main() {
-	for i := 0; i < getBoardsize(); i++ {
-		board = append(board, make([]int, getBoardsize()))
-	}
 	initWindow()
 }

@@ -1,6 +1,6 @@
 package main
 
-func horizontal(x int, y int) int {
+func horizontalWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
@@ -15,7 +15,7 @@ func horizontal(x int, y int) int {
 
 }
 
-func vertical(x int, y int) int {
+func verticalWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
@@ -30,7 +30,7 @@ func vertical(x int, y int) int {
 
 }
 
-func diagonalRight(x int, y int) int {
+func diagonalRightWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
@@ -45,7 +45,7 @@ func diagonalRight(x int, y int) int {
 
 }
 
-func diagonalLeft(x int, y int) int {
+func diagonalLeftWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
@@ -65,17 +65,17 @@ func checkWin() int {
 
 	for y := 0; y < boardSize; y++ {
 		for x := 0; x < boardSize; x++ {
-			if horizontal(x, y) != 0 {
-				return horizontal(x, y)
+			if horizontalWin(x, y) != 0 {
+				return horizontalWin(x, y)
 			}
-			if vertical(x, y) != 0 {
-				return vertical(x, y)
+			if verticalWin(x, y) != 0 {
+				return verticalWin(x, y)
 			}
-			if diagonalLeft(x, y) != 0 {
-				return diagonalLeft(x, y)
+			if diagonalLeftWin(x, y) != 0 {
+				return diagonalLeftWin(x, y)
 			}
-			if diagonalRight(x, y) != 0 {
-				return diagonalRight(x, y)
+			if diagonalRightWin(x, y) != 0 {
+				return diagonalRightWin(x, y)
 			}
 		}
 	}
