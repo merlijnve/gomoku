@@ -41,6 +41,7 @@ func initWindow() {
 func makeMove(col int, row int, player int) [][]int {
 	if board[row][col] == 0 {
 		board[row][col] = player
+		captureCheck()
 		freeThrees = checkFreeThrees(freeThrees)
 		return [][]int{{col, row}, {col + 1, row}}
 	}
