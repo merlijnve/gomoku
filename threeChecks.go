@@ -9,7 +9,7 @@ import (
 func horizontalThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
-	if x+6 < boardSize {
+	if x+5 <= boardSize {
 		// -***-
 		if board[x][y] == 0 &&
 			board[x+1][y] != 0 &&
@@ -46,7 +46,7 @@ func horizontalThree(x int, y int, freeThrees [][][]int) [][][]int {
 func verticalThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
-	if y+6 < boardSize {
+	if y+5 < boardSize {
 		// -***-
 		if board[x][y] == 0 &&
 			board[x][y+1] != 0 &&
@@ -83,7 +83,7 @@ func verticalThree(x int, y int, freeThrees [][][]int) [][][]int {
 func diagonalRightThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
-	if y+6 < boardSize && x+6 < boardSize {
+	if y+5 < boardSize && x+6 < boardSize {
 		// -***-
 		if board[x][y] == 0 &&
 			board[x+1][y+1] != 0 &&
@@ -120,7 +120,7 @@ func diagonalRightThree(x int, y int, freeThrees [][][]int) [][][]int {
 func diagonalLeftThree(x int, y int, freeThrees [][][]int) [][][]int {
 	boardSize := getBoardsize()
 
-	if y+6 < boardSize && x-6 > 0 {
+	if y+5 < boardSize && x > 5 {
 		// -***-
 		if board[x][y] == 0 &&
 			board[x-1][y+1] != 0 &&

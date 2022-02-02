@@ -4,7 +4,7 @@ func horizontalWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
-	if x+5 < boardSize && player != 0 &&
+	if x+4 < boardSize && player != 0 &&
 		player == board[x+1][y] &&
 		player == board[x+2][y] &&
 		player == board[x+3][y] &&
@@ -19,7 +19,7 @@ func verticalWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
-	if y+5 < boardSize && player != 0 &&
+	if y+4 < boardSize && player != 0 &&
 		player == board[x][y+1] &&
 		player == board[x][y+2] &&
 		player == board[x][y+3] &&
@@ -34,7 +34,7 @@ func diagonalRightWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
-	if y+5 < boardSize && x+5 < boardSize && player != 0 &&
+	if y+4 < boardSize && x+4 < boardSize && player != 0 &&
 		player == board[x+1][y+1] &&
 		player == board[x+2][y+2] &&
 		player == board[x+3][y+3] &&
@@ -49,7 +49,7 @@ func diagonalLeftWin(x int, y int) int {
 	boardSize := getBoardsize()
 
 	player := board[x][y]
-	if y+5 < boardSize && x-5 > 0 && player != 0 &&
+	if y+4 < boardSize && x-4 > 0 && player != 0 &&
 		player == board[x-1][y+1] &&
 		player == board[x-2][y+2] &&
 		player == board[x-3][y+3] &&
